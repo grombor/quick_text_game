@@ -1,6 +1,7 @@
 import threading
 from qtgame.commands import Command
 from qtgame.levels.level01.handler import Strange_House_Class
+from qtgame.levels.level02.handler import Strange_Forest_Class
 
 
 def start_game():
@@ -17,6 +18,7 @@ def new_turn():
     print('''
     \t\t.: Quick Text Game :.
     \t.: Wpisz 'pomoc', aby zobaczyc liste dostępnych komend.
+    \t.: Wpisz 'start', aby zagrać w grę.
     ''')
 
 
@@ -38,7 +40,7 @@ def run(content):
             print(f"\n{Strange_House_Class().pomoc()}\n")
         case "start":
             threading.Thread(target=Strange_House_Class().start(),).start()
-            threading.Thread(target=test(),).start()
+            threading.Thread(target=Strange_Forest_Class().start(),).start()
         case other:
             pass
 

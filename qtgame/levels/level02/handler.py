@@ -1,4 +1,3 @@
-import threading
 from qtgame.commands import Command
 
 AVAIABLE_COMMANDS = {
@@ -6,15 +5,13 @@ AVAIABLE_COMMANDS = {
 }
 
 AVAIABLE_EXITS = {
-    "1",
-    "2"
+    "kuchnia",
+    "schody"
 }
 
-AVAIABLE_EQUIPMENT = {
-    "rysunek"
-}
+AVAIABLE_EQUIPMENT = set()
 
-FLAG_level01 = True
+FLAG_level02 = True
 
 class Strange_Forest_Class:
 
@@ -27,15 +24,23 @@ class Strange_Forest_Class:
 
 
     def prolog(self):
-        return self.load_file("qtgame/levels/level02/prolog.txt")
+        return self.load_file("qtgame/levels/level02/prolog.txt")  
 
 
-    def hol(self):
-        return self.load_file("qtgame/levels/level01/hol.txt")
+    def kuchnia(self):
+        return self.load_file("qtgame/levels/level02/kuchnia.txt")  
+
+
+    def schody(self):
+        return self.load_file("qtgame/levels/level02/schody.txt")    
 
 
     def pokoj(self):
-        return self.load_file("qtgame/levels/level01/pokoj.txt")        
+        return self.load_file("qtgame/levels/level02/pokoj.txt")                
+
+
+    def las(self):
+        return self.load_file("qtgame/levels/level02/las.txt") 
 
 
     def pomoc(self):
@@ -51,21 +56,6 @@ class Strange_Forest_Class:
         print(f"\nRzeczy w plecaku: ", end='')  
         [print(e, end=', ') for e in AVAIABLE_EQUIPMENT]
         print("\n")
-
-
-    def handlePicture(self):
-        user_input = input("Jeśli chcesz przyjżeć się rysunkowi, wpisz 'uzyj rysunek'. Jeśli chcesz daje rozglądać się po pokoju, wpisz 'rozgladaj sie'.\n")
-        if user_input == 'uzyj rysunek':
-            self.load_file("qtgame/levels/level01/rysunek.txt")
-            if "rysunek" in AVAIABLE_EQUIPMENT:
-                AVAIABLE_EQUIPMENT.remove("rysunek")
-                threading.Thread(target=self.test(),).start()
-                global FLAG_level01
-                FLAG_level01 = False
-
-
-    def test(self):
-        print('koniec rozdzialu pierwszego')
 
 
     def verify_input(self, user_input):
@@ -94,19 +84,35 @@ class Strange_Forest_Class:
         match content.lower():
             case "pomoc":
                 print(f"\n{self.pomoc()}\n")
-            case "hol":
-                print(f"\n{self.hol()}\n")  
+            case "kuchnia":
+                print(f"\n{self.kuchnia()}\n")  
+            case "opisz":
+                print(f"\n{self.prolog()}\n")      
+            case "schody":
+                AVAIABLE_EXITS.clear()
+                AVAIABLE_EXITS.add("pokoj")
+                print(f"\n{self.pokoj()}\n")
             case "pokoj":
                 print(f"\n{self.pokoj()}\n")
-                self.handlePicture()                   
+                self.backpack()
+                user_input = input("Jeśli chcesz przyjżeć się przedmiotowi, wpisz 'zabierz przedmiot'.\n")
+                if user_input == 'zabierz przedmiot':
+                    AVAIABLE_EQUIPMENT.add("tajemniczy przedmiot")
+                    print("Trzymasz w ręku tajemniczy przedmiot")
+                    user_input = input("Jeśli chcesz przyjżeć się przedmiotowi, wpisz 'uzyj przedmiot'. Jeśli chcesz daje rozglądać się po pokoju, wpisz 'rozgladaj sie'.\n")
+                    if user_input == 'uzyj przedmiot':
+                        AVAIABLE_EQUIPMENT.clear()
+                        AVAIABLE_EXITS.clear()
+                        print(f"\n{self.las()}\n")
+                        print("<< Opuszczasz ten świat... >>")
+                        raise SystemExit 
             case other:
                 pass
 
 
     def start(self):
         print(self.prolog())
-        while FLAG_level01:
+        while FLAG_level02:
             print("\n\n:: Wpisz 'pomoc', aby zobaczyc liste dostępnych komend.")
             self.exits()
-            self.backpack()
             self.get_input(">>> ")

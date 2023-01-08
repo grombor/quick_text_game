@@ -1,6 +1,8 @@
 	QTG (Quick Text Game) to klasyczna gra fabularna, w której gracz wciela się w rolę bohatera i przemierza fantastyczny świat, rozwiązując zagadki i walcząc z potworami. 
 	Gracz podejmuje decyzje, które wpływają na przebieg gry i losy swojej postaci. Gra odbywa się za pomocą konsoli tekstowej, a interakcja z grą polega na wprowadzaniu poleceń za pomocą klawiatury. Gra została napisana w Pythonie, oferuje wiele możliwości rozwoju postaci i eksploracji fikcyjnego świata.
 
+Aby zacząć grę - wpisz 'start'.
+Jeśli chcesz wiedziec, jak znalazłeś się w tej sytuacji - wpisz 'opisz'.
 Jeśli chcesz się poruszyć - wpisz nazwę jednego z dostępnych wyjść.
 Jeśli chcesz użyć przedmiotu z plecaka - wpisz 'użyj' a po spacji nazwę przedmiotu bez polskich liter.
 Aby wyjść z gry - wpisz: 'wyjscie' lub wciśnij 'Crtl + C'.

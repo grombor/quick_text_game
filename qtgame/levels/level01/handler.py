@@ -52,13 +52,19 @@ class Strange_House_Class:
 
 
     def handlePicture(self):
-        user_input = input("Jeśli chcesz przyjżeć się rysunkowi, wpisz 'uzyj rysunek'. Jeśli chcesz daje rozglądać się po pokoju, wpisz 'rozgladaj sie'.\n")
-        if user_input == 'uzyj rysunek':
-            self.load_file("qtgame/levels/level01/rysunek.txt")
-            if "rysunek" in AVAIABLE_EQUIPMENT:
-                AVAIABLE_EQUIPMENT.remove("rysunek")
-                global FLAG_level01
-                FLAG_level01 = False
+        if "rysunek" in AVAIABLE_EQUIPMENT:
+            AVAIABLE_EQUIPMENT.clear()
+        user_input = input("Jeśli chcesz przyjżeć się rysunkowi, wpisz 'zabierz rysunek'\n")
+        if user_input == 'zabierz rysunek':
+            AVAIABLE_EQUIPMENT.add("rysunek")
+            print("Trzymasz w ręku tajemniczy rysunek")
+            user_input = input("Jeśli chcesz przyjżeć się rysunkowi, wpisz 'uzyj rysunek'. Jeśli chcesz daje rozglądać się po pokoju, wpisz 'rozgladaj sie'.\n")
+            if user_input == 'uzyj rysunek':
+                self.load_file("qtgame/levels/level01/rysunek.txt")
+                if "rysunek" in AVAIABLE_EQUIPMENT:
+                    AVAIABLE_EQUIPMENT.clear()
+                    global FLAG_level01
+                    FLAG_level01 = False
 
 
     def verify_input(self, user_input):
@@ -89,8 +95,10 @@ class Strange_House_Class:
                 print(f"\n{self.pomoc()}\n")
             case "hol":
                 print(f"\n{self.hol()}\n")  
+            case "opisz":
+                print(f"\n{self.prolog()}\n")                 
             case "pokoj":
-                AVAIABLE_EQUIPMENT.add("rysunek")
+                AVAIABLE_EQUIPMENT.clear()
                 print(f"\n{self.pokoj()}\n")
                 self.exits()
                 self.backpack()
@@ -104,5 +112,4 @@ class Strange_House_Class:
         while FLAG_level01:
             print("\n\n:: Wpisz 'pomoc', aby zobaczyc liste dostępnych komend.")
             self.exits()
-            self.backpack()
             self.get_input(">>> ")
