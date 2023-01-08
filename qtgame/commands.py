@@ -1,17 +1,10 @@
 class Command():
-    __commands = {"pomoc", "wyjscie"}
-
-    def __init__(self, content):
+    def __init__(self, content, commands = {"pomoc", "wyjscie", "start"}):
         self._content = content
+        self._commands = commands
 
     def check_command(self):
-        if self._content not in self.__commands:
+        if self._content not in self._commands:
             return False
         return True
 
-    def run(self):
-        match self._content:
-            case "pomoc":
-                print("Wybrałeś pomoc")
-            case other:
-                pass
